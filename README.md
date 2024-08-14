@@ -5,6 +5,34 @@
 A repository to develop a workflow linking Matlab and R to generate and analyse a large number of simulations.
 
 
+## Steps to run the workflow
+
+### Install iBridges
+
+```shell
+pip install ibridges
+```
+
+### Setup and check iBridges installation
+
+```shell
+ibridges init
+```
+
+### Install SnakeMake iRODS/iBridges plugin
+
+The ibridges/snakemake plugin needs to installed from a branch in a fork:
+
+```shell
+pip install git+https://github.com/qubixes/snakemake-storage-plugin-irods.git@switch-to-ibridges
+```
+
+## Run the workflow
+
+```shell
+snakemake --cores all
+```
+
 ## Authors
 
 Scientific contents:
