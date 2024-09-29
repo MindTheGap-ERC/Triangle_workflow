@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "triangle-workflow"
+version = "0.1.0"
+description = ""
+authors = ["Emilia Jarochowska <e.b.jarochowska@uu.nl>"]
+readme = "README.md"
+packages = [{include = "traingle_workflow"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+snakemake = "^8.20.5"
+ibridges = "^1.1.0"
+ibridges-servers-uu = "^0.1.0"
+switch-to-ibridges = { git = "https://github.com/qubixes/snakemake-storage-plugin-irods/tree/switch-to-ibridges" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
