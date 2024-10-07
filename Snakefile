@@ -5,7 +5,7 @@ def aggregate_output(wildcards):
 
 def strat_output(wildcards):
     return storage(expand("irods://nluu12p/home/research-test-christine/triangle/strat_columns/{param_file}_sc.mat",
-                          param_file=glob_wildcards("data/sea-level_curves/{param_file}.txt").param_file))
+                          param_file=glob_wildcards("irods://nluu12p/home/research-test-christine/triangle/{param_file}.mat").param_file))
 
 
 
