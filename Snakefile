@@ -37,5 +37,6 @@ rule extract_data:
         "cd ../CarboCAT_utils;"
         "x_positions = [{params.x_positions}]; "
         "y_positions = [{params.y_positions}]; "
-        "echo \"get_strat_columns(x_positions, y_positions, '{input}', '{output}'); exit\" | matlab -nodesktop -nosplash"
+        "echo \"get_strat_columns(x_positions, y_positions, '{input}', '{wildcards.param_file}_sc.mat'); exit\" | matlab -nodesktop -nosplash"
+        "ls -l; "
         "mv {wildcards.param_file}_sc.mat ../../{output}" 
