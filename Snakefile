@@ -5,7 +5,7 @@ def aggregate_output(wildcards):
 
 def strat_output(wildcards):
     return storage(expand("irods://nluu11p/home/research-mindthegap/triangle/strat_columns/{param_file}_sc.mat",
-                          param_file=glob_wildcards("irods://nluu12p/home/research-test-christine/triangle/{param_file}.mat").param_file))
+                          param_files = glob_wildcards("data/sea-level_curves/{param_file}.txt").param_file
 
 
 
@@ -27,7 +27,7 @@ rule matlab:
 
 rule extract_data:
     input:
-        "irods://nluu11p/home/research-mindthegap/triangle/{param_file}.mat"
+        storage("irods://nluu11p/home/research-mindthegap/triangle/{param_file}.mat")
     output:
         storage("irods://nluu11p/home/research-mindthegap/triangle/strat_columns/{param_file}_sc.mat")
     params:
