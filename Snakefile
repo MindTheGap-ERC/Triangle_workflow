@@ -12,6 +12,7 @@ def strat_output(wildcards):
 
 rule all:
     input:
+        aggregate_output,
         strat_output
 
 
