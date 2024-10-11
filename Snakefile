@@ -17,14 +17,14 @@ rule all:
 
 
 rule matlab:
-    input:
-        "data/sea-level_curves/{param_file}.txt"
-    output:
-        storage("irods://nluu11p/home/research-mindthegap/triangle/{param_file}.mat")
-    shell:
-        "cd src/CarboCATLite;"
-        "echo \"CarboCAT_cli('params/DbPlatform/paramsInputValues.txt', 'params/DbPlatform/paramsProcesses.txt', '{wildcards.param_file}', '../../{input}', false); exit\" | matlab -nodesktop -nosplash;"
-        "mv {wildcards.param_file}.mat {output};"
+   input:
+       "data/sea-level_curves/{param_file}.txt"
+   output:
+       storage("irods://nluu11p/home/research-mindthegap/triangle/{param_file}.mat")
+   shell:
+       "cd src/CarboCATLite;"
+       "echo \"CarboCAT_cli('params/DbPlatform/paramsInputValues.txt', 'params/DbPlatform/paramsProcesses.txt', '{wildcards.param_file}', '../../{input}', false); exit\" | matlab -nodesktop -nosplash;"
+       "mv {wildcards.param_file}.mat ../../{output};"
 
 
 rule extract_data:
@@ -33,6 +33,6 @@ rule extract_data:
     output:
         storage("irods://nluu11p/home/research-mindthegap/triangle/strat-col/{param_file}_sc.mat")
     shell:
-        "cd ../CarboCAT_utils;"
-        "echo \"get_strat_columns([5,10], [5,10], '{input}','{wildcards.param_file}_sc'); exit\" | matlab -nodesktop -nosplash;"
-        "mv {wildcards.param_file}_sc.mat {output};" 
+        "cd src/CarboCAT_utils;"
+        "echo \"get_strat_columns([5,10], [5,10], '../../{input}','{wildcards.param_file}_sc'); exit\" | matlab -nodesktop -nosplash;"
+        "mv {wildcards.param_file}_sc.mat ../../{output};"
