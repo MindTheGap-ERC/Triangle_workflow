@@ -8,8 +8,6 @@ def strat_output(wildcards):
     return storage(expand("irods://nluu11p/home/research-mindthegap/triangle/strat-col/{param_file}_sc.mat",
                   param_file=glob_wildcards("data/sea-level_curves/{param_file}.txt").param_file))
 
-
-
 rule all:
     input:
         strat_output
@@ -32,6 +30,7 @@ rule extract_data:
         storage("irods://nluu11p/home/research-mindthegap/triangle/{param_file}.mat")
     output:
         storage("irods://nluu11p/home/research-mindthegap/triangle/strat-col/{param_file}_sc.mat")
+
     shell:
         "cd src/CarboCAT_utils;"
         "echo \"get_strat_columns([5,10], [5,10], '../../{input}','{wildcards.param_file}_sc'); exit\" | matlab -nodesktop -nosplash;"
