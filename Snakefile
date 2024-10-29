@@ -33,5 +33,5 @@ rule extract_data:
 
     shell:
         "cd src/CarboCAT_utils;"
-        "echo \"get_strat_columns([5,10], [5,10], '../../{input}','{wildcards.param_file}_sc'); exit\" | matlab -nodesktop -nosplash;"
+        "echo \"get_strat_columns([20, 50, 80, 120], [2, 2, 2, 2, 5, 5, 5, 5, 7, 7, 7, 7], '../../{input}','{wildcards.param_file}_sc'); exit\" | matlab -nodesktop -nosplash;"
         "mv {wildcards.param_file}_sc.mat ../../{output};"
