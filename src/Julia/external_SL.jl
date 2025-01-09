@@ -29,7 +29,7 @@ end
 
 dir = "data/sea-level_curves"
 filename = joinpath(dir, "Auto000_Allo000_Stoch100V1.txt")
-input_sl = readdlm(filename, '\t', header=false)
+input_sl = readdlm(filename, '\t', header=false) * u"m"
 using DataFrames
 data = DataFrame(time = collect(0*time.Δt:time.Δt:time.steps*time.Δt), sea_level = input_sl[1:2001,1])
 
