@@ -1121,6 +1121,24 @@ throttler = ">=1.2.2,<2.0.0"
 wrapt = ">=1.15.0,<2.0.0"
 
 [[package]]
+name = "snakemake-storage-plugin-irods"
+version = "0.1.3"
+description = "A Snakemake plugin for handling input and output on iRODS"
+optional = false
+python-versions = "^3.11"
+files = []
+develop = true
+
+[package.dependencies]
+ibridges = "^1.1.0"
+snakemake-interface-common = "^1.15.0"
+snakemake-interface-storage-plugins = "^3.0.0"
+
+[package.source]
+type = "directory"
+url = "../snakemake-storage-plugin-irods"
+
+[[package]]
 name = "tabulate"
 version = "0.9.0"
 description = "Pretty-print tabular data"
@@ -1320,4 +1338,4 @@ pyyaml = ">=6.0,<7.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<4.0"
-content-hash = "7e92917f4b9610005a821ae74e468e7c525c7e396bcbb2d66e1332f0a8c2525c"
+content-hash = "c5d9fafe11aa6ab3f94d73b13b82492d423f711db7a380ca51c4278f6a360202"
