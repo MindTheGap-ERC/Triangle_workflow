@@ -15,7 +15,7 @@ using CarboKitten.Config: TimeProperties
 using CarboKitten.Components.TimeIntegration: write_times
 
 time = TimeProperties(
-	Δt = 100u"yr",
+	Δt = 500u"yr",
 	steps = 2000
 )
 
@@ -38,7 +38,7 @@ input_sl_array = input_sl[1:time.steps+1, 1].* u"m"
 
 using Interpolations
 
-sea_level = linear_interpolation(0:ustrip(time.Δt)*1e4:time.steps, input_sl_array);
+sea_level = linear_interpolation(0*time.Δt:time.Δt:time.steps*time.Δt, input_sl_array);
 
 # Facies definitions
 
