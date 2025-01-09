@@ -30,15 +30,15 @@ end
 dir = "data/sea-level_curves"
 filename = joinpath(dir, "Auto000_Allo000_Stoch100V1.txt")
 input_sl = readdlm(filename, '\t', header=false)
+using DataFrames
+data = DataFrame(time = collect(0*time.Δt:time.Δt:time.steps*time.Δt), sea_level = input_sl[1:2001,1])
 
 # the sea level file has a different length than the duration set for the run. 
 # this is a case when the time step matches but the durations don't, so we truncate the file. This needs to be made more error-proof.
 
-input_sl_array = input_sl[1:time.steps+1, 1].* u"m"
-
 using Interpolations
 
-sea_level = linear_interpolation(0*time.Δt:time.Δt:time.steps*time.Δt, input_sl_array);
+sea_level  = linear_interpolation(data.time, data.sea_level)
 
 # Facies definitions
 
@@ -62,7 +62,7 @@ facies = [
 		diffusion_coefficient = 3000u"m"
 	)]
 
-    input = ALCAP.Input(
+input = ALCAP.Input(
 	tag = "external_SL",
 	
 	time = time,
