@@ -40,6 +40,9 @@ using Interpolations
 
 sea_level  = linear_interpolation(data.time, data.sea_level)
 
+function SL()
+	return linear_interpolation(data.time, data.sea_level)
+end
 # Facies definitions
 
 facies = [
@@ -68,7 +71,7 @@ input = ALCAP.Input(
 	time = time,
 	box = box,
 	facies = facies,
-	sea_level = sea_level,
+	sea_level = SL(),
 	initial_topography = initial_topography,
 	
 	subsidence_rate = 50.0u"m/Myr",
