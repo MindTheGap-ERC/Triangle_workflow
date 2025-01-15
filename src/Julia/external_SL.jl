@@ -27,22 +27,19 @@ end
 
 # Import sea level curve
 
-dir = "data/sea-level_curves"
-filename = joinpath(dir, "Auto000_Allo000_Stoch100V1.txt")
+dir = "data/all-sealevel"
+filename = joinpath(dir, "Auto000_Allo000_Stoch100V2.txt")
 input_sl = readdlm(filename, '\t', header=false) * u"m"
-using DataFrames
-data = DataFrame(time = collect(0*time.Δt:time.Δt:time.steps*time.Δt), sea_level = input_sl[1:2001,1])
+sea_level = input_sl[1:2001,1]
+
 
 # the sea level file has a different length than the duration set for the run. 
 # this is a case when the time step matches but the durations don't, so we truncate the file. This needs to be made more error-proof.
 
 using Interpolations
 
-sea_level  = linear_interpolation(data.time, data.sea_level)
+SL  = linear_interpolation(time_axis(time), sea_level)
 
-function SL()
-	return linear_interpolation(data.time, data.sea_level)
-end
 # Facies definitions
 
 facies = [
