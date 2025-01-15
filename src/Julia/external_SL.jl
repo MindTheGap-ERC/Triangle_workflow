@@ -27,7 +27,7 @@ end
 
 # Import sea level curve
 
-dir = "data/all-sealevel"
+dir = "data/sea-level_curves"
 filename = joinpath(dir, "Auto000_Allo000_Stoch100V2.txt")
 input_sl = readdlm(filename, '\t', header=false) * u"m"
 sea_level = input_sl[1:2001,1]
@@ -68,7 +68,7 @@ input = ALCAP.Input(
 	time = time,
 	box = box,
 	facies = facies,
-	sea_level = SL(),
+	sea_level = SL,
 	initial_topography = initial_topography,
 	
 	subsidence_rate = 50.0u"m/Myr",
