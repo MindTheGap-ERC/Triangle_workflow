@@ -2,7 +2,7 @@
 
 ## Purpose
 
-A repository to develop a workflow linking Matlab and R to generate and analyse a large number of simulations.
+A repository to develop a workflow linking Julia and R to generate and analyse a large number of simulations.
 
 
 ## Steps to run the workflow
@@ -25,6 +25,21 @@ The ibridges/snakemake plugin needs to installed from a branch in a fork:
 
 ```shell
 pip install git+https://github.com/qubixes/snakemake-storage-plugin-irods.git@switch-to-ibridges
+```
+
+### Initiate Julia environment 
+
+Open Julia, initiate the environment by precompiling it, exit Julia.
+
+```shell
+julia
+```
+
+```julia
+using Pkg
+Pkg.activate(".")
+Pkg.instantiate()
+exit()
 ```
 
 ## Run the workflow
