@@ -2,6 +2,9 @@ using CarboKitten
 
 using Unitful
 using Interpolations
+using CarboKitten.Visualization
+using CarboKitten.Visualization: summary_plot
+using Makie
 
 using DelimitedFiles
 OUTPUTDIR = ".temp"
@@ -70,7 +73,8 @@ function main()
 		disintegration_rate = 50.0u"m/Myr"
 	)
 
-	output = run_model(Model{ALCAP}, input, "$(OUTPUTDIR)/$(output).h5")
+	output = run_model(Model{ALCAP}, input, "$(OUTPUTDIR)/$(ARGS[2]).h5")
+	summary_plot(output)
 end
 
 main()
