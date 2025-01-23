@@ -2,9 +2,6 @@ using CarboKitten
 
 using Unitful
 using Interpolations
-using CarboKitten.Visualization
-using CarboKitten.Visualization: summary_plot
-using Makie
 
 using DelimitedFiles
 OUTPUTDIR = ".temp"
