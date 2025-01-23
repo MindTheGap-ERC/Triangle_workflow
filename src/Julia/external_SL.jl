@@ -69,7 +69,6 @@ function main()
 	)
 
 	output = run_model(Model{ALCAP}, input, "$(ARGS[2])")
-	summary_plot(output)
 end
 
 main()
