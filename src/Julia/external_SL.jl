@@ -68,7 +68,7 @@ function main()
 		disintegration_rate = 50.0u"m/Myr"
 	)
 
-	output = run_model(Model{ALCAP}, input, "$(ARGS[2])")
+	run_model(Model{ALCAP}, input, "$(ARGS[2])")
 end
 
 main()
