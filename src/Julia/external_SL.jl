@@ -2,12 +2,8 @@ using CarboKitten
 
 using Unitful
 using Interpolations
-using CarboKitten.Visualization
-using CarboKitten.Visualization: summary_plot
-using Makie
 
 using DelimitedFiles
-OUTPUTDIR = ".temp"
 
 using CarboKitten.Boxes: Box, Coast
 
@@ -20,7 +16,6 @@ end
 
 function main()
 	box = Box{Coast}(grid_size = (50, 50), phys_scale = 100.0u"m")
-	output = last(split(ARGS[1], "/"))
 
 	time = TimeProperties(
 		Δt = 200u"yr",
@@ -73,8 +68,7 @@ function main()
 		disintegration_rate = 50.0u"m/Myr"
 	)
 
-	output = run_model(Model{ALCAP}, input, "$(OUTPUTDIR)/$(ARGS[2]).h5")
-	summary_plot(output)
+	run_model(Model{ALCAP}, input, "$(ARGS[2])")
 end
 
 main()
