@@ -10,12 +10,14 @@ using CarboKitten.Boxes: Box, Coast
 using CarboKitten.Config: TimeProperties
 using CarboKitten.Components.TimeIntegration: write_times
 
+using CarboKitten.Export: data_export, CSV
+
 function initial_topography(x, y)
 	return -x / 300.0
 end
 
 function main()
-	box = Box{Coast}(grid_size = (50, 50), phys_scale = 100.0u"m")
+	box = Box{Coast}(grid_size = (100, 70), phys_scale = 170.0u"m")
 
 	time = TimeProperties(
 		Δt = 200u"yr",
@@ -69,6 +71,13 @@ function main()
 	)
 
 	run_model(Model{ALCAP}, input, "$(ARGS[2])")
+
+	# Export sections at 4, 8 and 12 km away from the shore
+	export_locations = [(23, 35), (47, 35), (71, 35)]
+	data_export(CSV(export_locations,
+	:stratigraphic_column => "$(ARGS[2])_sc.csv",
+	:metadata => "$(ARGS[2]).toml"),
+	"$(ARGS[2])")
 end
 
 main()
