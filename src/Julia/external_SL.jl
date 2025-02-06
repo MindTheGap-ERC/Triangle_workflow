@@ -75,8 +75,8 @@ function main()
 	# Export sections at 4, 8 and 12 km away from the shore
 	export_locations = [(23, 35), (47, 35), (71, 35)]
 	data_export(CSV(export_locations,
-	:stratigraphic_column => "$(ARGS[2])_sc.csv",
-	:metadata => "$(ARGS[2]).toml"),
+	:stratigraphic_column => "$(ARGS[3])",
+	:metadata => "$(ARGS[4])"),
 	"$(ARGS[2])")
 end
 
