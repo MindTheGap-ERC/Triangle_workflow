@@ -1,0 +1,25 @@
+[[locations]]
+number = 1
+x = [3740.0, "m"]
+initial_topography = [-12.466666666666667, "m"]
+y = [5780.0, "m"]
+[[locations]]
+number = 2
+x = [7820.0, "m"]
+initial_topography = [-26.066666666666666, "m"]
+y = [5780.0, "m"]
+[[locations]]
+number = 3
+x = [11900.0, "m"]
+initial_topography = [-39.666666666666664, "m"]
+y = [5780.0, "m"]
+
+[global]
+tag = "external_SL"
+time_steps = 2000
+subsidence_rate = [50.0, "m Myr⁻¹"]
+delta_t = [0.0002, "Myr"]
+
+[files]
+metadata = "output.h5.toml"
+stratigraphic_column = "output.h5_sc.csv"
