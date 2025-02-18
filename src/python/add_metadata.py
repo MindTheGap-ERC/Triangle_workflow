@@ -21,4 +21,4 @@ if __name__ == "__main__":
             if isinstance(value, list):
                 imeta.add("mdg:"+key, str(value[0]), str(value[1]))
             else:
-                imeta.add(key, str(value))
+                imeta.add("mdg:"+key, str(value))
