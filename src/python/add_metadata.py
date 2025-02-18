@@ -19,6 +19,6 @@ if __name__ == "__main__":
         global_meta = toml_data["global"]
         for key, value in global_meta.items():
             if isinstance(value, list):
-                imeta.add(key, str(value[0]), str(value[1]))
+                imeta.add("mdg:"+key, str(value[0]), str(value[1]))
             else:
                 imeta.add(key, str(value))
