@@ -1,23 +1,25 @@
 #!/usr/bin/env Rscript
-# Running R script with parameters from CLI:
-# See https://www.r-bloggers.com/2015/09/passing-arguments-to-an-r-script-from-command-lines/
 
 #### Imports ####
 library("astrochron")
+library("stratcols")
+library("stratorder")
 source("src/R/utility_functions.R")
 
 args = commandArgs(trailingOnly=TRUE)
 
+#### Cyclostratigraphy ####
+
 #example for testing
-df <- read.csv(file="data/strat_cols/Auto000_Allo000_Stoch100V1_sc.csv")
-#df <- read.csv(file=args[1],
-#               sep = ",",
-#               header = TRUE)
+#df <- read.csv(file="data/strat_cols/Auto000_Allo000_Stoch100V1_sc.csv")
+df <- read.csv(file=args[1],
+               sep = ",",
+               header = TRUE)
 
 
 strat_columns <- split_sections(df)
 
-#### Test this on one section: needs to be propagated to an entire list ####
+##### Test this on one section: needs to be propagated to an entire list #####
 
 strat_columns$sc1_collapsed <- collapse_section(strat_columns$sc1)
 da <- strat_columns$sc1_collapsed
@@ -33,7 +35,7 @@ dh = prec_period/N_per_cycle
 data = astrochron::linterp(da, dt = dh,
                            check = TRUE,
                            genplot = FALSE)
-data$thickness <- data$thickness/100
+data$thickness <- data$thickness/100 #back to metres
 
 #ranked_data = astrochron::rankSeries(data,
 #                                     genplot = FALSE)
@@ -51,6 +53,33 @@ result_cyclo <- astrochron::timeOpt(dat = data,
                                     roll=1000, # Taner filter roll-off rate, in dB/octave.
                                     genplot = FALSE) 
 
+results <- result_cyclo[which.max(result_cyclo$r2_opt),]
+
+results$cyclo_pval <- astrochron::timeOptSim(dat = data,
+                                                    sedrate=best_sedrate$sedrate[1], # use the best one found by timeOpt
+                                                    numsim = 2000, 
+                                                    fit=1, 
+                                                    roll=NULL, 
+                                                    output=1, 
+                                                    genplot = FALSE, 
+                                                    verbose = FALSE)
+
+#### Markov metrics ####
+
+s = stratcols::as_stratcol(thickness = da$thickness,
+                facies = da$facies)
+m = stratorder::transition_matrix(s)
+
+n = 10000
+rom_vals = rep(NA, n)
+for (i in seq_len(n)){
+  randomized_column = shuffle_col(s)
+  rom_vals[i] = get_rom(randomized_column)
+}
+
+results$rom <- get_rom(s)
+results$rom_pval <- resultcalculate_p_value(rom_vals, get_rom(s))
+
 #### Assemble data for export ####
 
-best_sedrate <- result_cyclo[which.max(result_cyclo$r2_opt),]
+results <- cbind(args[1], best_sedrate, result_cyclo_pval)

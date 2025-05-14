@@ -23,3 +23,8 @@ collapse_section <- function(df) {
   section <- section[seq(dim(section)[1],1),]
   return(section)
 }
+
+calculate_p_value <- function(bootstrap_samples, observed_value) {
+  p_value <- mean(bootstrap_samples >= observed_value)
+  return(p_value)
+}
