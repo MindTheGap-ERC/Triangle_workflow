@@ -4,9 +4,11 @@
 
 #### Imports ####
 library("astrochron")
+source("src/R/utility_functions.R")
 
 args = commandArgs(trailingOnly=TRUE)
 
+#df <- read.csv(file="data/strat_cols/Auto000_Allo000_Stoch100V1_sc.csv")
 df <- read.csv(file=args[1],
                sep = ",",
                header = TRUE)
@@ -25,10 +27,11 @@ duration = 400 # kyr, needs to be read from the metadata
 av_sed = da$thickness[1]/duration #cm/kyr
 prec_period = 21*av_sed #cm
 N_per_cycle = 6 
-dh = prec_period/N_per_cycle
+dh = prec_period/N_per_cycle 
 
-data = astrochron::linterp(da, dt = dh/100,
-                           check = TRUE)
+data = astrochron::linterp(da, dt = dh,
+                           check = TRUE,
+                           genplot = TRUE)
 res_m = 0.1
 
 ranked_data = astrochron::rankSeries(data, dt = res_m)
