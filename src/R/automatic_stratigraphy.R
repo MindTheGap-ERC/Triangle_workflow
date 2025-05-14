@@ -31,11 +31,22 @@ dh = prec_period/N_per_cycle
 
 data = astrochron::linterp(da, dt = dh,
                            check = TRUE,
-                           genplot = TRUE)
-res_m = 0.1
+                           genplot = FALSE)
+data$thickness <- data$thickness/100
 
-ranked_data = astrochron::rankSeries(data, dt = res_m)
+#ranked_data = astrochron::rankSeries(data,
+#                                     genplot = FALSE)
 
-a = astrochron::timeOpt(ranked_data, output = 1)
-
+result_cyclo <- astrochron::timeOpt(dat = data, 
+                                    sedmin=0.5,
+                                    sedmax=10,
+                                    numsed=100,
+                                    linLog = 1,
+                                    r2max = 1,
+                                    output = 1,
+                                    check = F,
+                                    verbose = FALSE,
+                                    fit=1, # Test for precession amplitude modulation
+                                    roll=1000, # Taner filter roll-off rate, in dB/octave.
+                                    genplot = FALSE) 
 
