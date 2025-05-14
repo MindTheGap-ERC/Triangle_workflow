@@ -8,10 +8,11 @@ source("src/R/utility_functions.R")
 
 args = commandArgs(trailingOnly=TRUE)
 
-#df <- read.csv(file="data/strat_cols/Auto000_Allo000_Stoch100V1_sc.csv")
-df <- read.csv(file=args[1],
-               sep = ",",
-               header = TRUE)
+#example for testing
+df <- read.csv(file="data/strat_cols/Auto000_Allo000_Stoch100V1_sc.csv")
+#df <- read.csv(file=args[1],
+#               sep = ",",
+#               header = TRUE)
 
 
 strat_columns <- split_sections(df)
@@ -50,3 +51,6 @@ result_cyclo <- astrochron::timeOpt(dat = data,
                                     roll=1000, # Taner filter roll-off rate, in dB/octave.
                                     genplot = FALSE) 
 
+#### Assemble data for export ####
+
+best_sedrate <- result_cyclo[which.max(result_cyclo$r2_opt),]
