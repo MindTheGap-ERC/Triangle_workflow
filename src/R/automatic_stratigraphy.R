@@ -56,7 +56,7 @@ result_cyclo <- astrochron::timeOpt(dat = data,
 results <- result_cyclo[which.max(result_cyclo$r2_opt),]
 
 results$cyclo_pval <- astrochron::timeOptSim(dat = data,
-                                                    sedrate=best_sedrate$sedrate[1], # use the best one found by timeOpt
+                                                    sedrate=results$sedrate[1], # use the best one found by timeOpt
                                                     numsim = 2000, 
                                                     fit=1, 
                                                     roll=NULL, 
@@ -68,7 +68,8 @@ results$cyclo_pval <- astrochron::timeOptSim(dat = data,
 
 s = stratcols::as_stratcol(thickness = da$thickness,
                 facies = da$facies)
-m = stratorder::transition_matrix(s)
+s_merged = merge_beds(s, mode = "identical facies")
+m = stratorder::transition_matrix(s_merged)
 
 n = 10000
 rom_vals = rep(NA, n)
@@ -78,8 +79,12 @@ for (i in seq_len(n)){
 }
 
 results$rom <- get_rom(s)
-results$rom_pval <- resultcalculate_p_value(rom_vals, get_rom(s))
+results$rom_pval <- calculate_p_value(rom_vals, get_rom(s))
 
 #### Assemble data for export ####
 
-results <- cbind(args[1], best_sedrate, result_cyclo_pval)
+results <- cbind(args[1], results)
+write.csv(results,
+          file="data/Triangle_results.csv",
+          append = TRUE,
+          col.names = TRUE)
