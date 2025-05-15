@@ -85,6 +85,5 @@ results$rom_pval <- calculate_p_value(rom_vals, get_rom(s))
 
 results <- cbind(args[1], results)
 write.csv(results,
-          file="data/Triangle_results.csv",
-          append = TRUE,
+          file=args[2],
           col.names = TRUE)
