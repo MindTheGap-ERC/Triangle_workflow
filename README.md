@@ -42,6 +42,20 @@ Pkg.instantiate()
 exit()
 ```
 
+## Prepare the R environment
+
+```r
+install.packages("astrochron")
+install.packages("remotes")
+remotes::install_github(repo = "MindTheGap-ERC/stratcols",
+                        ref = "HEAD",
+                        dependencies = TRUE,
+                        build_vignettes = TRUE)
+remotes::install_github(repo = "MindTheGap-ERC/stratorder",
+                        ref = "HEAD",
+                        dependencies = TRUE,
+                        build_vignettes = TRUE)
+
 ## Run the workflow
 
 ```shell
