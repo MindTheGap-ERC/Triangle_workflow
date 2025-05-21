@@ -1,8 +1,8 @@
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.3"
+julia_version = "1.11.1"
 manifest_format = "2.0"
-project_hash = "e03aa26f0fc61afdab2001c83919cd3ac42e1e4d"
+project_hash = "318436013eecd3dc2151bc4e632482050a6a874e"
 
 [[deps.AbstractTrees]]
 git-tree-sha1 = "2d9c9a55f9c93e8887ad391fbae72f8ef55e1177"
@@ -111,6 +111,14 @@ deps = ["AxisArrays", "CSV", "CategoricalArrays", "DataFrames", "DelimitedFiles"
 git-tree-sha1 = "5e68dfeeead0e4dde020585dc00910457a142742"
 uuid = "690c6d5c-626a-429f-a06b-981a1dae1c19"
 version = "0.3.0"
+
+    [deps.CarboKitten.extensions]
+    VisualizationExt = ["Makie", "Statistics", "GeometryBasics"]
+
+    [deps.CarboKitten.weakdeps]
+    GeometryBasics = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
+    Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
+    Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [[deps.CategoricalArrays]]
 deps = ["DataAPI", "Future", "Missings", "Printf", "Requires", "Statistics", "Unicode"]

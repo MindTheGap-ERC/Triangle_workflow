@@ -1,8 +1,8 @@
 using CarboKitten
-using Unitful
 
+using Unitful
 using CarboKitten.Export: data_export, CSV
-using CarboKitten.Transport.Solvers: forward_euler
+using HDF5
 
 const PATH = "data/init_topo"
 
@@ -48,8 +48,25 @@ const INPUT = ALCAP.Input(
     sediment_buffer_size=50,
     depositional_resolution=0.5u"m",
     facies=FACIES)
-    run_model(Model{ALCAP}, INPUT, "$(PATH)/$(TAG).h5")
 
-function extract_topography()
+run_model(Model{ALCAP}, INPUT, "$(PATH)/$(TAG).h5")
 
+function extract_topography(PATH,TAG)
+    h5open("$(PATH)/$(TAG).h5", "r") do fid
+        disintegration = read(fid["disintegration"])
+        production = read(fid["production"])
+        deposition = read(fid["deposition"])
+        sediment_height = read(fid["sediment_height"])
+
+        data = DataFrame(
+            disintegration = disintegration,
+            production = production,
+            deposition = deposition,
+            sediment_height = sediment_height
+        )
+
+        return data
 end
+end
+
+extract_topography(PATH,TAG)
