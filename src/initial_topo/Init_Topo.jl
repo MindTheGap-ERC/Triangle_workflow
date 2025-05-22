@@ -1,8 +1,10 @@
 using CarboKitten
 
 using Unitful
-using CarboKitten.Export: data_export, CSV
+using CarboKitten.Export: data_export, CSV as CSVCarbo
 using HDF5
+using DataFrames
+import CSV as OfficialCSV
 
 const PATH = "data/init_topo"
 
@@ -41,7 +43,7 @@ const INPUT = ALCAP.Input(
         write_interval=1),
     ca_interval=1,
     initial_topography=(x, y) -> -x / 300.0,
-    sea_level= 0.0u"m",
+    sea_level= t -> 0.0u"m",
     subsidence_rate=50.0u"m/Myr",
     disintegration_rate=50.0u"m/Myr",
     insolation=400.0u"W/m^2",
@@ -53,20 +55,49 @@ run_model(Model{ALCAP}, INPUT, "$(PATH)/$(TAG).h5")
 
 function extract_topography(PATH,TAG)
     h5open("$(PATH)/$(TAG).h5", "r") do fid
-        disintegration = read(fid["disintegration"])
-        production = read(fid["production"])
-        deposition = read(fid["deposition"])
-        sediment_height = read(fid["sediment_height"])
-
-        data = DataFrame(
-            disintegration = disintegration,
-            production = production,
-            deposition = deposition,
-            sediment_height = sediment_height
+        disintegration = read(fid["disintegration"])[1,:,:,end]
+        @show size(disintegration)
+        production = read(fid["production"])[1,:,:,end]
+        deposition = read(fid["deposition"])[1,:,:,end]
+        sediment_height = read(fid["sediment_height"])[:,:,end]
+        @show size(sediment_height)
+        data_dis = DataFrame(
+            disintegration, :auto
         )
-
-        return data
+        @show size(data_dis)
+        data_pro = DataFrame(
+            production, :auto
+        )   
+        data_dep = DataFrame(
+           deposition, :auto
+        )
+        data_sed = DataFrame(
+           sediment_height, :auto
+        )
+        return data_dis.*1.0u"m", data_pro.*1.0u"m", data_dep.*1.0u"m", data_sed.*1.0u"m"
 end
 end
 
-extract_topography(PATH,TAG)
+data_dis, data_pro, data_dep, data_sed = extract_topography(PATH,TAG)
+
+function starting_bathy()
+    init = ones(100, 50) .*1.0u"m"
+    for i in CartesianIndices(init)
+        init[i]   = (i[1]-1) .* 150u"m" ./ 300
+    end
+    return init
+end
+
+starting_bathy()
+
+function calculate_bathymetry(data,INPUT)
+    Bathy = zeros(100, 50) .*1.0u"m"
+    Bathy .= starting_bathy() .- data .+ INPUT.subsidence_rate .* INPUT.time.Δt .* INPUT.time.steps
+    OfficialCSV.write("$(PATH)/$(TAG).csv", DataFrame(Bathy,:auto))
+end
+
+
+calculate_bathymetry(data_sed,INPUT)
+
+
+
