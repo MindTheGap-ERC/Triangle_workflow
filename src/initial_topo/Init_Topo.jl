@@ -36,7 +36,7 @@ const FACIES = [
 
 const INPUT = ALCAP.Input(
     tag="$TAG",
-    box=Box{Coast}(grid_size=(100, 50), phys_scale=150.0u"m"),
+    box=Box{Coast}(grid_size=(100, 70), phys_scale=170.0u"m"),
     time=TimeProperties(
         Δt=0.0001u"Myr",
         steps=5000,
@@ -81,9 +81,9 @@ end
 data_dis, data_pro, data_dep, data_sed = extract_topography(PATH,TAG)
 
 function starting_bathy()
-    init = ones(100, 50) .*1.0u"m"
+    init = ones(100, 70) .*1.0u"m"
     for i in CartesianIndices(init)
-        init[i]   = (i[1]-1) .* 150u"m" ./ 300
+        init[i]   = (i[1]-1) .* 170u"m" ./ 300
     end
     return init
 end
@@ -91,7 +91,7 @@ end
 starting_bathy()
 
 function calculate_bathymetry(data,INPUT)
-    Bathy = zeros(100, 50) .*1.0u"m"
+    Bathy = zeros(100, 70) .*1.0u"m"
     Bathy .= starting_bathy() .- data .+ INPUT.subsidence_rate .* INPUT.time.Δt .* INPUT.time.steps
     OfficialCSV.write("$(PATH)/$(TAG).csv", DataFrame(Bathy,:auto))
 end
