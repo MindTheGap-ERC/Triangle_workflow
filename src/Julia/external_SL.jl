@@ -13,7 +13,8 @@ using CarboKitten.Components.TimeIntegration: write_times
 using CarboKitten.Export: data_export, CSV
 
 function initial_topography(x, y)
-	return -x / 300.0
+	topography = readdlm("data/init_topo/example_init_topo.csv", ',', header=true)
+	return (x, y) -> topography[x, y]
 end
 
 function main()
