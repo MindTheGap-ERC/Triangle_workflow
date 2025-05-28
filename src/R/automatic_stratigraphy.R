@@ -2,7 +2,6 @@
 
 #### Imports ####
 library("astrochron")
-library("stratcols")
 library("stratorder")
 source("src/R/utility_functions.R")
 
@@ -66,10 +65,19 @@ results$cyclo_pval <- astrochron::timeOptSim(dat = data,
 
 #### Markov metrics ####
 
-s = stratcols::as_stratcol(thickness = da$thickness,
+s = stratorder::as_stratcol(thickness = da$thickness,
                 facies = da$facies)
+
+##### Markov order metric #####
+
 s_merged = merge_beds(s, mode = "identical facies")
-m = stratorder::transition_matrix(s_merged)
+s_ord_names = order_facies_names(s_merged)
+m = stratorder::transition_matrix(s_ord_names)
+results$mom <- get_mom(m)
+
+##### runs order metric #####
+
+results$rom <- get_rom(s)
 
 n = 10000
 rom_vals = rep(NA, n)
