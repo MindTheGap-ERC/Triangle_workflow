@@ -24,9 +24,9 @@ function main()
 		Δt = 200u"yr",
 		steps = 2000
 	)
-
+	#PATH = "data/sea-level_curves/Auto000_Allo000_Stoch100V1.txt"
 	# Import sea level curve
-	input_sl = readdlm(ARGS[1], '\t', header=false) * u"m"
+	input_sl = readdlm(ARGS[1], '\t', header=false) * u"m" #
 	sea_level = input_sl[1:2001,1]
 
 	SL  = linear_interpolation(time_axis(time), sea_level)
@@ -38,19 +38,19 @@ function main()
 			maximum_growth_rate = 500.0u"m/Myr",
 			extinction_coefficient = 0.8u"m^-1",
 			saturation_intensity = 60.0u"W/m^2",
-			diffusion_coefficient = 500u"m"
+			diffusion_coefficient = 50u"m/yr"
 		),
 		ALCAP.Facies(
 			maximum_growth_rate = 400.0u"m/Myr",
 			extinction_coefficient = 0.1u"m^-1",
 			saturation_intensity = 60.0u"W/m^2",
-			diffusion_coefficient = 5000u"m"
+			diffusion_coefficient = 25u"m/yr"
 		),
 		ALCAP.Facies(
 			maximum_growth_rate = 100.0u"m/Myr",
 			extinction_coefficient = 0.005u"m^-1",
 			saturation_intensity = 60.0u"W/m^2",
-			diffusion_coefficient = 3000u"m"
+			diffusion_coefficient = 12.5u"m/yr"
 		)]
 
 	input = ALCAP.Input(
