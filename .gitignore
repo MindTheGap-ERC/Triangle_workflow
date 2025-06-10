@@ -3,6 +3,6 @@
 .RData
 .Ruserdata
 .temp
-
+*.h5
 *.done
 .snakemake
